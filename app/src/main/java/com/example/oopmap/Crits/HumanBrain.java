@@ -15,27 +15,24 @@ public class HumanBrain extends PredatorBrain {
     }
 
     @Override
-    protected void zeroSetup()
-    {
-        wl=9;
+    protected void zeroSetup() {
+        wl = 9;
     }
 
     @Override
     public double getResult(Creature owner) {
-        double res=0;
-        int i=0;
-        List<Double> preresults=new ArrayList<>();
-        List<Double> resultssum=new ArrayList<>();
-        while (i<5)
-        {
-            int j=0;
-            DirVector dirs=new DirVector(owner.getDirection()+i);
-            DirVector dirsCo=new DirVector(owner.getDirection()+i+2);
+        double res = 0;
+        int i = 0;
+        List<Double> preresults = new ArrayList<>();
+        List<Double> resultssum = new ArrayList<>();
+        while (i < 5) {
+            int j = 0;
+            DirVector dirs = new DirVector(owner.getDirection() + i);
+            DirVector dirsCo = new DirVector(owner.getDirection() + i + 2);
             preresults.add(0.0);
-            while (j<5)
-            {
-                int k=-1;
-                while (k<2) {
+            while (j < 5) {
+                int k = -1;
+                while (k < 2) {
                     Tile cur_r = owner.getCurrentTile();
                     Tile cur = cur_r.homeMap.getTile(cur_r.x + dirsCo.x * k, cur_r.y + dirsCo.y * k);
                     if (type == 0) {
@@ -83,44 +80,41 @@ public class HumanBrain extends PredatorBrain {
                     }
                     k++;
                 }
-                    j++;
-                }
+                j++;
+            }
 
             i++;
-            }
-        preresults.add(owner.getLifetime()*weights.get(5));
-        preresults.add(owner.getHunger()*weights.get(6));
-        preresults.add(((Human)owner).getInvSize()*weights.get(7));
-        int k=0;
-        while (k+8<wl)
-        {
-            preresults.add(owner.getMemory(k)*weights.get(k+8));
+        }
+        preresults.add(owner.getLifetime() * weights.get(5));
+        preresults.add(owner.getHunger() * weights.get(6));
+        preresults.add(((Human) owner).getInvSize() * weights.get(7));
+        int k = 0;
+        while (k + 8 < wl) {
+            preresults.add(owner.getMemory(k) * weights.get(k + 8));
             k++;
         }
-        Double mulSum=0.0;
-        i=0;
-        while (i<preresults.size())
-        {
-            mulSum+=preresults.get(i);
+        Double mulSum = 0.0;
+        i = 0;
+        while (i < preresults.size()) {
+            mulSum += preresults.get(i);
             i++;
         }
-        i=0;
-        res=mulSum;
-        int h=0;
-        while (h<c_weights.size()) {
-            double tmp=0.0;
+        i = 0;
+        res = mulSum;
+        int h = 0;
+        while (h < c_weights.size()) {
+            double tmp = 0.0;
             i = 0;
             while (i < c_weights.get(h).size()) {
                 tmp += res * c_weights.get(h).get(i);
                 i++;
             }
-            res=tmp;
+            res = tmp;
             h++;
         }
-        k=0;
-        while (k+8<wl)
-        {
-            owner.setMemory(k,res*weights2.get(k+8));
+        k = 0;
+        while (k + 8 < wl) {
+            owner.setMemory(k, res * weights2.get(k + 8));
             k++;
         }
 
@@ -128,8 +122,7 @@ public class HumanBrain extends PredatorBrain {
     }
 
     @Override
-    protected Brain InitBrain()
-    {
+    protected Brain InitBrain() {
         return (new HumanBrain(type));
     }
 }

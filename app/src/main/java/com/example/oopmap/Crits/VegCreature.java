@@ -1,7 +1,5 @@
 package com.example.oopmap.Crits;
 
-import com.example.oopmap.Crits.Brain;
-import com.example.oopmap.Crits.Creature;
 import com.example.oopmap.Meta.BestBrains;
 import com.example.oopmap.Meta.CreatureMap;
 import com.example.oopmap.Meta.DirVector;
@@ -29,15 +27,15 @@ public class VegCreature extends Creature {
         }
         PrefferedTile = GrassTile.class;
         addMemoryCell();
-        setColor(255,255,255);
-        type=0;
+        setColor(255, 255, 255);
+        type = 0;
     }
 
     public VegCreature(Creature otherCreature1, Creature otherCreature2) {
         super(otherCreature1, otherCreature2);
         addMemoryCell();
-        setColor(255,255,255);
-        type=0;
+        setColor(255, 255, 255);
+        type = 0;
     }
 
     @Override
@@ -47,20 +45,19 @@ public class VegCreature extends Creature {
 
     @Override
     protected void MakeChild() {
-        DirVector dirVector=new DirVector(direction);
+        DirVector dirVector = new DirVector(direction);
         VegCreature newborn = new VegCreature(this, location.getCreature(currentTile.x + dirVector.x, currentTile.y + dirVector.y));
         newborn.currentTile = currentTile.homeMap.getTile(currentTile.x - dirVector.x, currentTile.y - dirVector.y);
-        setHunger(getHunger()-25);
-        int k=0;
-        while (k<brains.size())
-        {
+        setHunger(getHunger() - 25);
+        int k = 0;
+        while (k < brains.size()) {
             newborn.brains.add(brains.get(k).crossover(
-                    location.getCreature(currentTile.x+dirVector.x,currentTile.y+dirVector.y).brains.get(k),
+                    location.getCreature(currentTile.x + dirVector.x, currentTile.y + dirVector.y).brains.get(k),
                     newborn
             ));
             k++;
         }
-        newborn.location=location;
+        newborn.location = location;
         location.addCreature(newborn);
         childAmount++;
     }

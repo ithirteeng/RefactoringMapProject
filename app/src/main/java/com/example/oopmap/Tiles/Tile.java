@@ -52,7 +52,7 @@ public class Tile {
             return this.watered();
         }
         if (level < 20) {
-            if (TrueRand.random.nextBoolean())
+            if (TrueRand.nextBoolean())
                 return this.withGrass();
             return this.withForest();
         }
